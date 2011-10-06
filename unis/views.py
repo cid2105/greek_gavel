@@ -1,5 +1,4 @@
 from django.shortcuts import *
-from django.shortcuts import *
 from unis.models import *
 from organization.models import *
 from users.forms import RegistrationForm

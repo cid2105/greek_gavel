@@ -54,6 +54,14 @@ $(document).ready(function()
 	    $(this).attr("src", "{% get_static_prefix %}images/register.png");
 	  }
 	);
+	
+	 $('#login input[type!="submit"]').click(function () { 
+				
+		$(this).val("");
+	  });
+
+	 
+
 
 	$(function() {
 		$('#carousel').bxSlider({
@@ -62,26 +70,19 @@ $(document).ready(function()
 			            auto: true,
 			            controls: false,
 						speed: 2000
-	            
 	        });
-	 
+	
 			var availableTags = [];
-		
+			
 			{% for uni in uni_list %}
 			availableTags.push("{{uni}}");
 			{% endfor %}
-			
+
+
 			$( "#unis" ).autocomplete({
 				source: availableTags
 			});
 		});
-
-		
-		
-
-			
-			
-
 		});	
 
 		

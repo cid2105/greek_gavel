@@ -28,6 +28,3 @@ class Post(models.Model):
 			return True
 		else:
 			return False
-
-
-	

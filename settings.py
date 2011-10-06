@@ -1,5 +1,3 @@
-# Django settings for greek project.
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -14,6 +12,7 @@ STATIC_PATH = os.path.join( PROJECT_ROOT, MEDIA_DIR )
 PROFILE_PATH = os.path.join( STATIC_PATH, PROFILE_PIC_DIR )
 STATIC_ADMIN_PATH = os.path.join( STATIC_PATH, 'admin/' )
 TEMPLATE_PATH = os.path.join(PROJECT_ROOT, 'templates/')
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 MANAGERS = ADMINS
 
@@ -51,6 +50,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 
@@ -62,15 +62,33 @@ EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# Absolute path to the directory that holds media.
+# Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = '/Users/colediamond/Projects/greek/media/'
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: "http://media.lawrence.com", "http://example.com/media/"
+MEDIA_URL = '/media/'
+
+# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# trailing slash.
+# Examples: "http://foo.com/media/", "/media/".
+ADMIN_MEDIA_PREFIX = '/media/'
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '*sf4aqc22_&sbke*962*ex3ysb46&!6dyfm2v6!)c8!vo6@b_f'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-AUTH_PROFILE_MODULE = 'users.UserProfile'
+
+MEDIA_URL = '/media'
+
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
+
 STATIC_ROOT = PROJECT_ROOT
 
 # URL prefix for static files.
@@ -91,16 +109,19 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#   'django.contrib.staticfiles.finders.DefaultStorageFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+
 )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'w_zq4^=jrmtjfsv9%*&$d_t(s1#c9$hy9jkdk%5_+lzgos+aix'
 
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -130,11 +151,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'users.middleware.authentication.RequireLoginMiddleware',
 	'users.middleware.profanity.ProfanityFilterMiddleware',	
-
 )
 
 ROOT_URLCONF = 'greek.urls'
@@ -146,15 +164,25 @@ TEMPLATE_DIRS = (
 	TEMPLATE_PATH,
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+"django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.contrib.messages.context_processors.messages",
+"views.default_context"
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.admin',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
      'django.contrib.admindocs',
 	'organization', 
@@ -219,5 +247,4 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
 
